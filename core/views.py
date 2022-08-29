@@ -234,8 +234,6 @@ class Adminapp():
 
     @permission_required(perm='is_superuser is True', login_url='loginasadminerror')
     def index(request):
-
-
         context = {
             'users' : Adminapp.userlist,
             'todayssales' : Adminapp.todaystotals,
