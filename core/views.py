@@ -193,27 +193,30 @@ class Adminapp():
         }
         return render(request, 'core/login.html', context)
     
-
-    @permission_required(perm='is_superuser is True', login_url='loginasadminerror')
-    def index(request):
+    
+    todayspayments = Payment.objects.filter(date_created__date = datetime.date.today())
+    
+    def userlist():
         users = User.objects.all()
-        todayspayments = Payment.objects.filter(date_created__date = datetime.date.today())
+        return users
+    
+    def todaystotals():
+        total = 0
+        todayssales = Payment.objects.filter(date_created__date =datetime.date.today())
+        for sale in todayssales:
+            total = sale.total_price() + total
+        return total
+                        
+    def monthstotals(): 
+        total = 0
         today = datetime.datetime.now()
-        def todaystotals():
-            total = 0
-            todayssales = Payment.objects.filter(date_created__date =datetime.date.today())
-            for sale in todayssales:
-                total = sale.total_price() + total
-            return total
-                    
-        def monthstotals(): 
-            total = 0
-            monthsales = Payment.objects.filter(date_created__year = today.year, date_created__month = today.month)
-            for sale in monthsales:
-                total = sale.total_price() + total
-            
-            return total
-
+        monthsales = Payment.objects.filter(date_created__year = today.year, date_created__month = today.month)
+        for sale in monthsales:
+            total = sale.total_price() + total
+        
+        return total
+    
+    def sorteditems():
         itemssorted = {}
 
         allitems = PaymentItem.objects.all()
@@ -226,12 +229,32 @@ class Adminapp():
                 value = itemssorted[item.product.product_name]
                 newvalue = item.total_price() + value
                 itemssorted[item.product.product_name] = newvalue 
+    
+        return sorted(itemssorted.items(), key=lambda x:x[1], reverse=True)
+
+    @permission_required(perm='is_superuser is True', login_url='loginasadminerror')
+    def index(request):
+
 
         context = {
-            'users' : users,
-            'todayssales' : todaystotals,
-            'monthsales' : monthstotals,
-            'items' : sorted(itemssorted.items(), key=lambda x:x[1], reverse=True),
-            'todayspayments' : todayspayments,
+            'users' : Adminapp.userlist,
+            'todayssales' : Adminapp.todaystotals,
+            'monthsales' : Adminapp.monthstotals,
+            'items' : Adminapp.sorteditems,
+            'todayspayments' : Adminapp.todayspayments,
         }
         return render(request, 'adminapp/index.html', context)
+    
+    @permission_required(perm='is_superuser is True', login_url='loginasadminerror')
+    def viewpayment(request, id):
+        payment = get_object_or_404(Payment, payment_id=id)
+        items = payment.paymentitem_set.all()
+        context = {
+            'payment' : payment,
+            'items' : items,
+            'users' : Adminapp.userlist,
+            'todayssales' : Adminapp.todaystotals,
+            'monthsales' : Adminapp.monthstotals,
+        }
+        
+        return render(request, 'adminapp/paymentview.html', context)

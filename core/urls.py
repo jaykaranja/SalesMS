@@ -15,5 +15,6 @@ urlpatterns = [
     path('payment-items/<int:args>/<int:id>', Dashboard.deletepaymentitem, name='delete-payment-item'),
     path('querypaymentbyid', Dashboard.querypaymentbyid, name='querypaymentbyid'),
     path('administration/', Adminapp.index, name='admin-index'),
-    path('loginasadminerror', Adminapp.loginasadminerror, name='loginasadminerror')
+    path('loginasadminerror', Adminapp.loginasadminerror, name='loginasadminerror'),
+    path('administration/paymentview/<int:id>', Adminapp.viewpayment, name='adminpaymentview')
 ]
