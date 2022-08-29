@@ -63,19 +63,23 @@
           <p class="title is-4 has-text-centered">Recent Statistics</p>
           <div class="columns">
             <div class="column" id="firstcoladmin">
-              <p class="title is-5 has-text-centered">Sales today per store</p>
+              <p class="title is-5 has-text-centered">Today's Sales</p>
               <table class="admindashtable">
                 <thead>
                   <tr>
-                    <th>Store</th>
-                    <th>Today's sales</th>
+                    <th>Payment ID</th>
+                    <th>Total amount</th>
                   </tr>
                 </thead>
                 <tbody>
+                  {% if todayspayments %}
+                  {% for payment in todayspayments %}
                   <tr>
-                    <td>Nyeri branch</td>
-                    <td>1500/=</td>
+                    <td>{{ payment.payment_id }}</td>
+                    <td>{{ payment.total_price }}/=</td>
                   </tr>
+                  {% endfor %}
+                  {% endif %}
                 </tbody>
               </table>
             </div>
@@ -89,10 +93,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Chips</td>
-                    <td>15000/=</td>
-                  </tr>
+                  {% for key, value in items %}
+                    <tr>
+                      <td>{{ key }}</td>
+                      <td>Kshs. {{ value }}</td>
+                    </tr>
+                  {% endfor %}
                 </tbody>
               </table>
             </div>

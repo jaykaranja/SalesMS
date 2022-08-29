@@ -1,7 +1,6 @@
 import datetime
 import random
 import string
-from time import timezone
 from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, get_object_or_404
@@ -198,7 +197,8 @@ class Adminapp():
     @permission_required(perm='is_superuser is True', login_url='loginasadminerror')
     def index(request):
         users = User.objects.all()
-        
+        todayspayments = Payment.objects.filter(date_created__date = datetime.date.today())
+        today = datetime.datetime.now()
         def todaystotals():
             total = 0
             todayssales = Payment.objects.filter(date_created__date =datetime.date.today())
@@ -208,15 +208,30 @@ class Adminapp():
                     
         def monthstotals(): 
             total = 0
-            monthsales = Payment.objects.filter(date_created__date = datetime.date.today() - datetime.timedelta(30))
+            monthsales = Payment.objects.filter(date_created__year = today.year, date_created__month = today.month)
             for sale in monthsales:
                 total = sale.total_price() + total
             
             return total
 
+        itemssorted = {}
+
+        allitems = PaymentItem.objects.all()
+
+        for item in allitems:
+            if item.product.product_name not in itemssorted:
+                itemssorted[item.product.product_name] = item.total_price()
+
+            else:
+                value = itemssorted[item.product.product_name]
+                newvalue = item.total_price() + value
+                itemssorted[item.product.product_name] = newvalue 
+
         context = {
             'users' : users,
             'todayssales' : todaystotals,
             'monthsales' : monthstotals,
+            'items' : sorted(itemssorted.items(), key=lambda x:x[1], reverse=True),
+            'todayspayments' : todayspayments,
         }
         return render(request, 'adminapp/index.html', context)
