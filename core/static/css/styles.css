@@ -1,0 +1,44 @@
+#form-brand {
+    height: 30px;
+
+}
+
+.hero.is-fullheight.is-success {
+    background-color: white;
+}
+
+#form-btn {
+    width: 100%;
+}
+
+.hero-body {
+    margin-top: 10px;
+}
+
+.nav-profile {
+    border-radius: 100%;
+}
+
+#base-btn {
+    width: 80%;
+}
+
+#dashboard-table {
+    width: 100%;
+}
+
+.hero is-medium{
+    background-color: white;
+}
+
+#fullwidthbutton {
+    width: 100%;
+}
+
+.admindashtable { 
+    width: 100%;
+}
+
+#firstcoladmin {
+    border-right: 1px solid black;
+}

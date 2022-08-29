@@ -1,0 +1,79 @@
+{% extends 'core/base.html' %}
+{% block title %}Today's Payments | Proceeds{% endblock title %}
+{% block content %}
+{% if payment %}
+<div class="container">
+    <div class="columns">
+        <div class="column is-8 is-offset-2">
+            <div class="notification is-success">
+                <center>Payment found</center>
+            </div>
+        </div>
+    </div>
+  <div class="columns">
+    <div class="column is-4 is-offset-4">
+        <center><div class="menu-label">PAYMENT ID</div></center>
+        <center><small>{{ payment.payment_id }}</small></center>
+        <br>
+        <center><div class="menu-label">CREATED AT</div></center>
+        <center><small>{{ payment.date_created }}</small></center>
+        <br><br>
+    </div>
+    <div class="column">
+      <div class="container">
+        <div class="menu-label">Total amount</div>
+        <p>Kshs. {{ payment.total_price }}</p>
+      </div>
+    </div>
+  </div>
+  <section>
+      <div class="columns">
+        <div class="column is-8 is-offset-2">
+          <table class="table" id="dashboard-table">
+              <thead>
+                <tr>
+                  <th>Product ID</th>
+                  <th>Product name</th>
+                  <th>Count</th>
+                  <th>Total(Kshs.)</th>
+                </tr>
+              </thead>
+              <tbody>
+                  {% for item in items %}
+                  <tr>
+                      <td>{{ item.product.product_id }}</td>
+                      <td>{{ item.product.product_name }}</td>
+                      <td>{{ item.count }}</td>
+                      <td>{{ item.total_price }}</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+        </div>
+      </div>
+  </section>
+</div>
+{% else %}
+{% if message %}
+<div class="columns">
+    <div class="column is-8 is-offset-2">
+      <div class="notification is-danger">
+          {{ message }}
+      </div>
+    </div>
+</div>
+{% endif %}
+<div class="columns">
+  <div class="column is-4 is-offset-4">
+    <form method="POST">
+    {% csrf_token %}
+    <center><h2 class="subtitle">Please enter the payment ID here</h2></center>
+    <br>
+    <input class="input" type="text" name="id" placeholder="Payment ID">
+    <br><br>
+    <center><button class="button is-small is-success" name="submit">Check</button></center>
+    </form>
+  </div>
+</div>
+{% endif %}
+{% endblock content %}

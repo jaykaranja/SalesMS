@@ -1,0 +1,33 @@
+div.box {
+    margin-top: 300px;
+    border-top: 4px solid green;
+    border-bottom: 4px solid green;
+}
+
+.extra a {
+    font-size: 12px;
+    color: black;
+}
+
+.extra a:hover {
+    font-size: 12px;
+    color: green;
+}
+
+.is-danger {
+    color: red;
+    margin-bottom: 10px;
+}
+
+#indexheading h6 {
+    font-size: 70px;
+    font-weight: 250;
+    margin-top: 370px;
+    margin-left: 140px
+}
+
+#indexheading p {
+    font-size: 35px;
+    font-weight: 150;
+    margin-left: 140px;
+}

@@ -1,0 +1,94 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Submit payment | Proceeds{% endblock title %}
+{% block content %}
+{% if payment is None %}
+<div class="container">
+    <section class="hero is-medium">
+        <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-4 is-offset-4">
+                    {% if message %}
+                    <div class="notification is-{{messagetype}} is-small">
+                    <small><center>{{ message }}</center></small>
+                    </div>
+                    {% endif %}
+                    <a class="button is-success is-small" id="fullwidthbutton" href="{% url 'create-payment' %}">ENTER A NEW PAYMENT</a>
+                    <br><br><br>
+                    <a class="button is-warning is-small" id="fullwidthbutton" href="{% url 'dashboard' %}">RETURN TO DASHBOARD</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+</div>
+{% else %}
+<div class="container">
+    <div class="columns">
+        <div class="column is-4 is-offset-4">
+            <center><div class="menu-label">PAYMENT ID</div></center>
+            <center><small>{{ payment.payment_id }}</small></center>
+            <center><div class="menu-label">CREATED AT</div></center>
+            <center><small>{{ payment.date_created }}</small></center>
+            <br><br>
+            <form method="POST">
+                {% csrf_token %}
+                <center>{{ form|crispy }}</center>
+                <br>
+                <div class="field">
+                    <div class="control">
+                        <center><button class="button is-active" name="submit">Submit</button></center>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="column">
+            <nav class="level">
+              <div class="level-left"></div>             
+              <div class="level-right">
+                <div class="level-item">
+                    <p>Total cost: <strong>Kshs. {{ payment.total_price }}</strong></p>
+                </div>
+                <div class="level-item">
+                    <a class="button is-success is-small" href="{% url 'confirmpayment' payment.payment_id %}">
+                        SUBMIT PAYMENT
+                    </a>
+                </div>
+              </div>
+            </nav>
+        </div>
+    </div>
+    <section>
+        <div class="columns">
+            <div class="column is-8 is-offset-2">
+                {% if items %}
+                <table class="table" id="dashboard-table">
+                    <thead>
+                      <tr>
+                        <th>Product ID</th>
+                        <th>Product name</th>
+                        <th>Count</th>
+                        <th>Total(Kshs.)</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>{{ item.product.product_id }}</td>
+                            <td>{{ item.product.product_name }}</td>
+                            <td>{{ item.count }}</td>
+                            <td>{{ item.total_price }}</td>
+                            <td><a class="button is-small is-outlined is-danger" href="{% url 'delete-payment-item' payment.payment_id item.id %}"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endif %}
+{% endblock content %}

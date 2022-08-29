@@ -1,0 +1,104 @@
+{% extends 'adminapp/base.html' %}
+{% block title %}Dashboard{% endblock title %}
+{% block content %}
+<div class="container">
+    <div class="columns">
+      <div class="column is-2 is-offset-1">
+        <aside class="menu">
+          <p class="menu-label">
+            Users
+          </p>
+          <ul class="menu-list">
+            {% if users %}
+            {% for user in users %}
+            <li><a>{{ user.username }}</a></li>
+            {% endfor %}
+            {% endif %}
+          </ul>
+          <br><br>
+          <p class="menu-label">
+            Stores
+          </p>
+          <ul class="menu-list">
+            <li><a>Nairobi branch</a></li>
+            <li><a>Kisumu branch</a></li>
+            <li><a>Nyeri branch</a></li>
+            <li><a>Thika branch</a></li>
+            <li><a>Mombasa branch</a></li>
+            <li><a>Eldoret branch</a></li>
+          </ul>
+        </aside>
+      </div>
+      <div class="column is-9">
+        <section class="info-tiles">
+            <div class="tile is-ancestor has-text-centered">
+                <div class="tile is-parent">
+                    <article class="tile is-child box">
+                        <p class="title"><small>Kshs. {{ todayssales }}</small></p>
+                        <p class="subtitle"><small>Today's sales</small></p>
+                    </article>
+                </div>
+                <div class="tile is-parent">
+                    <article class="tile is-child box">
+                        <p class="title"><small>Kshs. {{ monthsales }}</small></p>
+                        <p class="subtitle"><small>This month's sales</small></p>
+                    </article>
+                </div>
+                <div class="tile is-parent">
+                    <article class="tile is-child box">
+                        <p class="title">{{ users.count }}</p>
+                        <p class="subtitle">Users</p>
+                    </article>
+                </div>
+                <div class="tile is-parent">
+                    <article class="tile is-child box">
+                        <p class="title">19</p>
+                        <p class="subtitle">Extra</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <br><br>
+        <section>
+          <p class="title is-4 has-text-centered">Recent Statistics</p>
+          <div class="columns">
+            <div class="column" id="firstcoladmin">
+              <p class="title is-5 has-text-centered">Sales today per store</p>
+              <table class="admindashtable">
+                <thead>
+                  <tr>
+                    <th>Store</th>
+                    <th>Today's sales</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Nyeri branch</td>
+                    <td>1500/=</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="column">
+              <p class="title is-5 has-text-centered">Bestselling products</p>
+              <table class="admindashtable">
+                <thead>
+                  <tr>
+                    <th>Products</th>
+                    <th>Sales</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Chips</td>
+                    <td>15000/=</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+</div>
+{% endblock content %}

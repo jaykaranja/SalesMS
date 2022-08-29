@@ -1,0 +1,50 @@
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Log In | Proceeds</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'css/bulma/css/bulma.css' %}">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <section class="hero is-success is-fullheight">
+              <div class="hero-body">
+                <div class="container">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="columns">
+                          <div class="column is-offset-4 is-4 has-text-center" id="form-content">
+                            <img src="{% static 'images/logo.png' %}" id="form-brand">
+                            <div class="menu-label has-justify-content-center">
+                                Log In
+                            </div>
+                            {% if message %}
+                            <div class="notification is-danger is-small">
+                                {{ message }}
+                            </div>
+                            {% endif %}
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input" type="text" name="username" placeholder="Username" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input" type="password" name="password" placeholder="Password" required>
+                                </div>
+                            </div>
+                            <button name="submit" class="button is-success is-small" id="form-btn">
+                              Log In
+                            </button>
+                        </div>
+                    </form>
+                </div>
+              </div>
+            </section>
+        </div>
+    </body>
+</html>

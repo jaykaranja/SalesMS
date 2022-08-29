@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+{% block title %}All products | Proceeds{% endblock title %}
+{% block content %}
+<div class="container">
+    <table class="table" id="dashboard-table">
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Name</th>
+          <th>Price(Kshs.)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if products %}
+            {% for product in products %}
+            <tr>
+                <td>{{ product.product_id }}</td>
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.product_price }}</td>
+              </tr>
+            {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+</div>
+{% endblock content %}

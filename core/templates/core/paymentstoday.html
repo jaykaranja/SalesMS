@@ -1,0 +1,77 @@
+{% extends 'core/base.html' %}
+{% block title %}Today's Payments | Proceeds{% endblock title %}
+{% block content %}
+{% if payment %}
+<div class="container">
+  <div class="columns">
+    <div class="column is-4 is-offset-4">
+        <center><div class="menu-label">PAYMENT ID</div></center>
+        <center><small>{{ payment.payment_id }}</small></center>
+        <br>
+        <center><div class="menu-label">CREATED AT</div></center>
+        <center><small>{{ payment.date_created }}</small></center>
+        <br><br>
+    </div>
+    <div class="column">
+      <div class="container">
+        <div class="menu-label">Total amount</div>
+        <p>Kshs. {{ payment.total_price }}</p>
+      </div>
+    </div>
+  </div>
+  </div>
+  <section>
+      <div class="columns">
+        <div class="column is-8 is-offset-2">
+          {% if items %}
+          <table class="table" id="dashboard-table">
+              <thead>
+                <tr>
+                  <th>Product ID</th>
+                  <th>Product name</th>
+                  <th>Count</th>
+                  <th>Total(Kshs.)</th>
+                </tr>
+              </thead>
+              <tbody>
+                  {% for item in items %}
+                  <tr>
+                      <td>{{ item.product.product_id }}</td>
+                      <td>{{ item.product.product_name }}</td>
+                      <td>{{ item.count }}</td>
+                      <td>{{ item.total_price }}</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+          {% endif %}
+        </div>
+      </div>
+  </section>
+</div>
+{% else %}
+{% if todayspayments  %}
+<table class="table" id="dashboard-table">
+  <thead>
+    <tr>
+      <th>Payment ID</th>
+      <th>Time</th>
+      <th>Quotation(Kshs.)</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for payment in todayspayments %}
+        <tr>
+          <td><a href="{% url 'paymentview' payment.payment_id %}">{{ payment.payment_id }}</a></td>
+          <td>{{ payment.date_created.time }}</td>
+          <td>{{ payment.total_price }}</td>
+        </tr>
+      {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<center><p class="title is-6">There are no payments today yet.</p></center>
+{% endif %}
+{% endif %}
+</div>
+{% endblock content %}
