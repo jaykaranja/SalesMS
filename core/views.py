@@ -116,8 +116,12 @@ class Dashboard:
     @login_required()
     def confirmpayment(request, args):
         payment = get_object_or_404(Payment, payment_id=args)
+        paymentitems = payment.paymentitem_set.all()
         payment.confirmed = True
-        payment.save()
+        if paymentitems is None:
+            payment.delete
+        else:
+            payment.save()
         context = {
             'message' : 'Payment submitted successfully',
             'messagetype' : 'success',
@@ -161,14 +165,14 @@ class Dashboard:
                     'message' : 'Payment does not exist. Please try again.',
                 }
                 return render(request, 'core/querypaymentbyid.html', context)
+            
+            except ValueError:
+                context = {
+                    'message' : 'Payment ID must be in numeric form. Please try again.',
+                }
+                return render(request, 'core/querypaymentbyid.html', context)
+            
         return render(request, 'core/querypaymentbyid.html')
-        
-
-
-
-    
-
-
 
 class Adminapp():
     """
