@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+
+* {
+    font-family: 'Fira Sans', sans-serif;
+}
 #form-brand {
     height: 30px;
 
