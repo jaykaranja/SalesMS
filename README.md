@@ -1,3 +1,3 @@
 # SalesMS
 
-Hosted at salesms.pythonanywhere.com
+Hosted [here](https://salesms.pythonanywhere.com).
