@@ -1,3 +1,3 @@
 # SalesMS
 
-Hosted [here](https://salesms.pythonanywhere.com{:target="_blank"}).
+Hosted [here](https://salesms.pythonanywhere.com).
